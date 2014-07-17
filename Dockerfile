@@ -3,6 +3,9 @@ MAINTAINER Joan Llopis <jllopisg@gmail.com>
 ADD mosquitto.tar.gz /
 ADD mosquitto.conf /etc/mosquitto/mosquitto.conf
 RUN adduser -SDH mosquitto
+RUN mkdir /var/lib/mosquitto && \
+    touch /var/lib/mosquitto/.keep && \
+    chown mosquitto:mosquitto /var/lib/mosquitto
 
 EXPOSE 1883
 
