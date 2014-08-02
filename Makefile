@@ -16,5 +16,6 @@ mosquitto:
 	@echo "Done!"
 
 clean:
+	rm mosquitto.tar.gz             || true
 	${DOCKER} rm ${TMPCONT}         || true
 	${DOCKER} rmi ${TMPMOSQDOC}     || true
