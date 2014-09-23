@@ -8,6 +8,7 @@ RUN mkdir /var/lib/mosquitto && \
     chown mosquitto:mosquitto /var/lib/mosquitto
 
 EXPOSE 1883
+EXPOSE 9883
 
 VOLUME ["/var/lib/mosquitto", "/etc/mosquitto", "/etc/mosquitto.d"]
 
