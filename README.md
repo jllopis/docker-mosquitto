@@ -5,7 +5,9 @@ Mosquitto MQTT Broker on Docker Image (under 8MB).
 
 # Version
 
-**mosquitto** v1.3.1
+**mosquitto** v1.4 (devel branch)
+
+This version implement MQTT over WebSocket. You can use an MQTT JavaScript library to connect, like Paho: http://eclipse.org/paho/clients/js/
 
 # Build
 
@@ -27,7 +29,7 @@ It will use the existent **mosquitto.tar.gz** if it exist or will create a new o
 
 You can specify your repository and tag by 
 
-    $ sudo make REPOSITORY=my_own_repo/mqtt TAG=v1.3.1
+    $ sudo make REPOSITORY=my_own_repo/mqtt TAG=v1.4
 
 Default for **REPOSITORY** is **jllopis/mosquitto** (should change this) and for **TAG** is **latest**.
 
@@ -53,6 +55,7 @@ See the following examples for some guidance:
       -v /tmp/mosquitto/var/lib/mosquitto:/var/lib/mosquitto 
       --name mqtt \
       -p 1883:1883 \
+      -p 9883:9883 \
       jllopis/mosquitto
 
 ## Data Only Containers
@@ -67,5 +70,6 @@ and then just use **VOLUMES_FROM** in your container:
       --volumes-from mqtt_data \
       --name mqtt \
       -p 1883:1883 \
+      -p 9883:9883 \
       jllopis/mosquitto
 
