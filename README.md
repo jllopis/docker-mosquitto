@@ -1,31 +1,21 @@
 docker-mosquitto
 ================
 
-Mosquitto MQTT Broker on Docker Image (under 8MB).
+Mosquitto MQTT Broker on Docker Image.
 
 # Version
 
-**mosquitto** v1.4 (devel branch)
+**mosquitto** v1.4
 
 This version implement MQTT over WebSocket. You can use an MQTT JavaScript library to connect, like Paho: http://eclipse.org/paho/clients/js/
 
 # Build
 
-Use the provide _Makefile_ to build either, the **mosquitto** binaries or the full image.
-
-The the binaries are built inside a docker container (Ubuntu 14.04) built for this. The binaries are extracted to a **mosquitto.tar.gz** file that will be injected to the final **mosquitto container**.
-
-## Build the binaries
-
-    $ sudo make mosquitto
-
-Now you have a newly created **mosquitto.tar.gz** with the binaries installed. The tar file does not contain man pages nor any configuration file. See below to know how to add config files to the image.
+Use the provide _Makefile_ to build the image.
 
 ## Build the Mosquitto docker image
 
     $ sudo make
-
-It will use the existent **mosquitto.tar.gz** if it exist or will create a new one if it doesn't.
 
 You can specify your repository and tag by 
 
