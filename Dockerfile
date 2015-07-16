@@ -44,7 +44,7 @@ RUN cd / && \
 
 RUN echo "Everything compiled, cleaning up" && \
     cd / && rm -rf org.eclipse.mosquitto && \
-    cd / && rm -rf  && mosquitto-auth-plug && \
+    cd / && rm -rf mosquitto-auth-plug && \
     echo "Removing unneeded packages"
 
 RUN apt-get purge -y --auto-remove $BUILD_DEPS
