@@ -25,7 +25,12 @@ RUN cd / && rm -rf libwebsockets-1.4-chrome43-firefox-36/ && \
     make && \
     make install && \
     ldconfig -v && \
-    cd / && rm -rf org.eclipse.mosquitto && \
+    echo "MOSQUITTO INSTALLED"
+
+# cd / && rm -rf org.eclipse.mosquitto && \
+#
+
+RUN cd / && \
     git clone git://github.com/jpmens/mosquitto-auth-plug.git && \
     cd mosquitto-auth-plug && \
     cp config.mk.in config.mk && \
@@ -35,9 +40,12 @@ RUN cd / && rm -rf libwebsockets-1.4-chrome43-firefox-36/ && \
     sed -i "s/MOSQUITTO_SRC = /MOSQUITTO_SRC = ..\/org.eclipse.mosquitto\//" config.mk && \
     make && \
     cp auth-plug.so /usr/local/lib/ && \
+    echo "AUTH PLUGIN INSTALLED"
+
+RUN echo "Everything compiled, cleaning up" && \
     cd / && rm -rf org.eclipse.mosquitto && \
     cd / && rm -rf  && mosquitto-auth-plug && \
-    echo "Everything compiled"
+    echo "Removing unneeded packages"
 
 RUN apt-get purge -y --auto-remove $BUILD_DEPS
 
