@@ -34,7 +34,6 @@ RUN cd / && rm -rf libwebsockets-1.4-chrome43-firefox-36/ && \
     sed -i "s/BACKEND_MYSQL ?= yes/BACKEND_MYSQL ?= no/" config.mk && \
     sed -i "s/MOSQUITTO_SRC = /MOSQUITTO_SRC = ..\/org.eclipse.mosquitto\//" config.mk && \
     make && \
-    make install && \
     cp auth-plug.so /usr/local/lib/ && \
     cd / && rm -rf org.eclipse.mosquitto && \
     cd / && rm -rf  && mosquitto-auth-plug && \
