@@ -1,4 +1,4 @@
-FROM debian:7.8
+FROM ubuntu:14.04
 ENV DEBIAN_FRONTEND noninteractive
 
 EXPOSE 1883
@@ -15,13 +15,6 @@ RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libss
     apt-get update -q && \
     apt-get install -qy $buildDeps openssl --no-install-recommends && \
     apt-get install -qy curl libwebsockets3 libwebsockets-dev && \
-    wget -O - https://github.com/warmcat/libwebsockets/archive/v1.4-chrome43-firefox-36.tar.gz  | tar -zxvf - && \
-    cd libwebsockets-1.4-chrome43-firefox-36/ && \
-    mkdir build && \
-    cd build && \
-    cmake .. -DLWS_WITH_HTTP2=1 -DLWS_WITHOUT_TESTAPPS=1 && \
-    make && \
-    make install && \
     ldconfig -v && \
     cd / && rm -rf libwebsockets-1.4-chrome43-firefox-36/ && \
     git clone git://git.eclipse.org/gitroot/mosquitto/org.eclipse.mosquitto.git && \
