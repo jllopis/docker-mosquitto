@@ -14,7 +14,7 @@ RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libss
     touch /var/lib/mosquitto/.keep && \
     apt-get update -q && \
     apt-get install -qy $buildDeps openssl --no-install-recommends && \
-    wget -O - http://git.warmcat.com/cgi-bin/cgit/libwebsockets/snapshot/libwebsockets-1.4-chrome43-firefox-36.tar.gz  | tar -zxvf - && \
+    wget -O - https://github.com/warmcat/libwebsockets/archive/v1.4-chrome43-firefox-36.tar.gz  | tar -zxvf - && \
     cd libwebsockets-1.4-chrome43-firefox-36/ && \
     mkdir build && \
     cd build && \
