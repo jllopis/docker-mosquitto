@@ -39,7 +39,7 @@ RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libss
     make && \
     cp auth-plug.so /usr/local/lib/ && \
     cd / && rm -rf org.eclipse.mosquitto && \
-    cd / && rm -rf  && mosquitto-auth-plug && \
+    cd / && rm -rf mosquitto-auth-plug && \
     apt-get purge -y --auto-remove $buildDeps
 
 
