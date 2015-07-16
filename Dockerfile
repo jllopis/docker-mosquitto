@@ -37,7 +37,6 @@ RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libss
     sed -i "s/BACKEND_MYSQL ?= yes/BACKEND_MYSQL ?= no/" config.mk && \
     sed -i "s/MOSQUITTO_SRC = /MOSQUITTO_SRC = ..\/org.eclipse.mosquitto\//" config.mk && \
     make && \
-    make install && \
     cp auth-plug.so /usr/local/lib/ && \
     cd / && rm -rf org.eclipse.mosquitto && \
     cd / && rm -rf  && mosquitto-auth-plug && \
