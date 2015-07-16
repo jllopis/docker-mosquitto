@@ -14,9 +14,10 @@ RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libss
     touch /var/lib/mosquitto/.keep && \
     apt-get update -q && \
     apt-get install -qy $buildDeps openssl --no-install-recommends && \
-    apt-get install -qy curl libwebsockets3 libwebsockets-dev && \
+    apt-get install -qy curl libwebsockets3 libcurl3 libcurl4-openssl-dev libwebsockets-dev && \
     ldconfig -v && \
-    cd / && rm -rf libwebsockets-1.4-chrome43-firefox-36/ && \
+    echo "OK"
+RUN cd / && rm -rf libwebsockets-1.4-chrome43-firefox-36/ && \
     git clone git://git.eclipse.org/gitroot/mosquitto/org.eclipse.mosquitto.git && \
     cd org.eclipse.mosquitto && \
     sed -i "s/WITH_WEBSOCKETS:=no/WITH_WEBSOCKETS:=yes/" config.mk && \
