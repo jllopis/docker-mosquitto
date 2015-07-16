@@ -8,6 +8,7 @@ VOLUME ["/var/lib/mosquitto", "/etc/mosquitto", "/etc/mosquitto.d"]
 
 RUN groupadd -r mosquitto && \
     useradd -r -g mosquitto mosquitto
+ENV BUILD_DEPS="wget build-essential cmake bzip2 mercurial git libwrap0-dev libssl-dev libc-ares-dev xsltproc docbook docbook-xsl uuid-dev zlib1g-dev libhiredis-dev libsqlite3-dev"
 
 RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libssl-dev libc-ares-dev xsltproc docbook docbook-xsl uuid-dev zlib1g-dev libhiredis-dev libsqlite3-dev'; \
     mkdir -p /var/lib/mosquitto && \
@@ -37,7 +38,9 @@ RUN cd / && rm -rf libwebsockets-1.4-chrome43-firefox-36/ && \
     cp auth-plug.so /usr/local/lib/ && \
     cd / && rm -rf org.eclipse.mosquitto && \
     cd / && rm -rf  && mosquitto-auth-plug && \
-    apt-get purge -y --auto-remove $buildDeps
+    echo "Everything compiled"
+
+RUN apt-get purge -y --auto-remove $BUILD_DEPS
 
 
 ADD mosquitto.conf /etc/mosquitto/mosquitto.conf
