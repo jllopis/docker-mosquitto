@@ -9,12 +9,12 @@ VOLUME ["/var/lib/mosquitto", "/etc/mosquitto", "/etc/mosquitto.d"]
 RUN groupadd -r mosquitto && \
     useradd -r -g mosquitto mosquitto
 
-RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libssl-dev libc-ares-dev xsltproc docbook docbook-xsl uuid-dev zlib1g-dev libhiredis-dev curl libsqlite3-dev'; \
+RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libssl-dev libc-ares-dev libcurl4-openssl-dev xsltproc docbook docbook-xsl uuid-dev zlib1g-dev libhiredis-dev curl libsqlite3-dev'; \
     mkdir -p /var/lib/mosquitto && \
     touch /var/lib/mosquitto/.keep && \
     apt-get update -q && \
     apt-get install -qy $buildDeps openssl --no-install-recommends && \
-    wget -O - https://github.com/warmcat/libwebsockets/archive/v1.4-chrome43-firefox-36.tar.gz  | tar -zxvf - && \
+    curl -kL https://github.com/warmcat/libwebsockets/archive/v1.4-chrome43-firefox-36.tar.gz  | tar -zxvf - && \
     cd libwebsockets-1.4-chrome43-firefox-36/ && \
     mkdir build && \
     cd build && \
