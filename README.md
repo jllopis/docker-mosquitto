@@ -9,7 +9,7 @@ Mosquitto MQTT Broker on Docker Image.
 
 This version implement MQTT over WebSocket. You can use an MQTT JavaScript library to connect, like Paho: http://eclipse.org/paho/clients/js/
 
-It has the auth plugin `https://github.com/jpmens/mosquitto-auth-plug` included. It uses (and is compiled with) support for a `Redis` backend. The additional config for this plugin (sample `auth-plugin.conf` included) can be bind mounted in the extended configuration directory: `/etc/mosquitto.d`. Any file with a `.conf` extension will be loaded by `redis` on startup.
+It has the auth plugin `https://github.com/jpmens/mosquitto-auth-plug` included. It uses (and is compiled with) support for a `Redis` and `http` backends. The additional config for this plugin (sample `auth-plugin.conf` included) can be bind mounted in the extended configuration directory: `/etc/mosquitto.d`. Any file with a `.conf` extension will be loaded by `mosquitto` on startup.
 
 For details on the auth plugin configuration, refer to the author repository. A little quick&dirty example its included at the end.
 
