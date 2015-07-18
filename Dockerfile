@@ -12,8 +12,9 @@ RUN groupadd -r mosquitto && \
 RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libssl-dev libc-ares-dev libcurl4-openssl-dev xsltproc docbook docbook-xsl uuid-dev zlib1g-dev libhiredis-dev curl libsqlite3-dev'; \
     mkdir -p /var/lib/mosquitto && \
     touch /var/lib/mosquitto/.keep && \
+    mkdir -p /etc/mosquitto.d && \
     apt-get update -q && \
-    apt-get install -qy $buildDeps openssl --no-install-recommends && \
+    apt-get install -qy $buildDeps openssl libc-ares2 libcurl3 libhiredis0.10 --no-install-recommends && \
     curl -kL https://github.com/warmcat/libwebsockets/archive/v1.4-chrome43-firefox-36.tar.gz  | tar -zxvf - && \
     cd libwebsockets-1.4-chrome43-firefox-36/ && \
     mkdir build && \
@@ -28,7 +29,6 @@ RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libss
     sed -i "s/WITH_WEBSOCKETS:=no/WITH_WEBSOCKETS:=yes/" config.mk && \
     make && \
     make install && \
-    cd / && rm -rf org.eclipse.mosquitto && \
     git clone git://github.com/jpmens/mosquitto-auth-plug.git && \
     cd mosquitto-auth-plug && \
     cp config.mk.in config.mk && \
@@ -38,6 +38,7 @@ RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libss
     sed -i "s/MOSQUITTO_SRC = /MOSQUITTO_SRC = ..\/org.eclipse.mosquitto\//" config.mk && \
     make && \
     cp auth-plug.so /usr/local/lib/ && \
+    cp np /usr/local/bin/ && chmod +x /usr/local/bin/np && \
     cd / && rm -rf org.eclipse.mosquitto && \
     cd / && rm -rf mosquitto-auth-plug && \
     apt-get purge -y --auto-remove $buildDeps
