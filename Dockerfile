@@ -1,4 +1,4 @@
-FROM debian:7.8
+FROM debian:8.1
 ENV DEBIAN_FRONTEND noninteractive
 
 EXPOSE 1883
