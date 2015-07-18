@@ -34,7 +34,7 @@ RUN buildDeps='git alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linu
     make && \
     cp auth-plug.so /usr/local/lib/ && \
     cp np /usr/local/bin/ && chmod +x /usr/local/bin/np && \
-    cd / && rm -rf org.eclipse.mosquitto && \
+    cd / && rm -rf org.eclipse.mosquitto-${MOSQ_VERSION} && \
     cd / && rm -rf mosquitto-auth-plug && \
     apk del $buildDeps && rm -rf /var/cache/apk/*
 
