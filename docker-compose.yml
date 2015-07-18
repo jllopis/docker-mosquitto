@@ -12,6 +12,9 @@ mosquitto:
         ports:
         - "1883:1883"
         - "9883:9883"
+        environment:
+        - DOMAIN=example.com
+        - PORT=8080
         links:
         - redis:mosquitto.redis.link
 
