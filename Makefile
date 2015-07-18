@@ -1,8 +1,8 @@
 DOCKER=docker
 REPOSITORY?=jllopis/mosquitto
-TAG?=latest
+TAG?=1.4.2
 
 image:
 	@echo "Building mosquitto image"
-	${DOCKER} build -t ${REPOSITORY}:${TAG} .
+	${DOCKER} build --no-cache -t ${REPOSITORY}:${TAG} .
 
