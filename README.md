@@ -165,3 +165,7 @@ Much better... But, did you get any output in the `mosquitto_sub`? None. Try thi
     $ mosquitto_sub -h b2d -t test -u admin -P secretpass
 
 And now everything *should* work! ;)
+
+## Contributors
+
+- See [contributors page](https://github.com/jllopis/docker-mosquitto/graphs/contributors) for a list of contributors.
