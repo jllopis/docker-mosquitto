@@ -1,0 +1,17 @@
+redis:
+        image: redis:3
+        volumes:
+        - ${PWD}/tmp/data:/data
+        ports:
+        - "6379"
+
+mosquitto:
+        build: .
+        volumes:
+        - ${PWD}/auth-plugin.conf:/etc/mosquitto.d/auth-plugin.conf
+        ports:
+        - "1883:1883"
+        - "9883:9883"
+        links:
+        - redis:mosquitto.redis.link
+
