@@ -26,6 +26,7 @@ RUN buildDeps='wget build-essential cmake bzip2 mercurial git libwrap0-dev libss
     cd / && rm -rf libwebsockets-1.4-chrome43-firefox-36/ && \
     git clone git://git.eclipse.org/gitroot/mosquitto/org.eclipse.mosquitto.git && \
     cd org.eclipse.mosquitto && \
+    git checkout v1.4.3 -b v1.4.3 && \
     sed -i "s/WITH_WEBSOCKETS:=no/WITH_WEBSOCKETS:=yes/" config.mk && \
     make && \
     make install && \
