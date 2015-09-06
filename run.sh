@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
 chown mosquitto:mosquitto -R /var/lib/mosquitto
