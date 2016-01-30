@@ -1,9 +1,9 @@
 DOCKER=docker
 REPOSITORY?=jllopis/mosquitto
-TAG?=1.4.5
+TAG?=1.4.7
 
 all:
-	@echo "Mosquitto version: v1.4.5"
+	@echo "Mosquitto version: ${TAG}"
 	@echo ""
 	@echo "Commands:"
 	@echo "  make image : build the mosquitto image"
