@@ -11,7 +11,9 @@ RUN addgroup -S mosquitto && \
 ENV PATH=/usr/local/bin:/usr/local/sbin:$PATH
 ENV MOSQUITTO_VERSION=v1.4.7
 
+COPY run.sh /
 RUN buildDeps='git alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linux-dev hiredis-dev curl-dev libxslt docbook-xsl'; \
+    chmod +x /run.sh && \
     mkdir -p /var/lib/mosquitto && \
     touch /var/lib/mosquitto/.keep && \
     mkdir -p /etc/mosquitto.d && \
@@ -38,10 +40,7 @@ RUN buildDeps='git alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linu
     cd / && rm -rf org.eclipse.mosquitto && \
     apk del $buildDeps && rm -rf /var/cache/apk/*
 
-
 ADD mosquitto.conf /etc/mosquitto/mosquitto.conf
-COPY run.sh /
-RUN chmod +x /run.sh
 
 ENTRYPOINT ["/run.sh"]
 CMD ["mosquitto"]
