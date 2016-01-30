@@ -41,6 +41,7 @@ RUN buildDeps='git alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linu
 
 ADD mosquitto.conf /etc/mosquitto/mosquitto.conf
 COPY run.sh /
+RUN chmod +x /run.sh
 
 ENTRYPOINT ["/run.sh"]
 CMD ["mosquitto"]
