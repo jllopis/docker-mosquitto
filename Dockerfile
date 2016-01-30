@@ -1,4 +1,4 @@
-FROM alpine:3.2
+FROM alpine:3.3
 
 EXPOSE 1883
 EXPOSE 9883
