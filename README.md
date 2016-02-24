@@ -35,7 +35,7 @@ Default for **REPOSITORY** is **jllopis/mosquitto** (should change this) and for
 
 Actually the command executed by make is
 
-    docker build --no-cache -t jllopis/mosquitto:1.4.7 .
+    docker build --no-cache -t jllopis/mosquitto:v1.4.7 .
 
 # Persistence and Configuration
 
@@ -63,7 +63,7 @@ See the following examples for some guidance:
       --name mqtt \
       -p 1883:1883 \
       -p 9883:9883 \
-      jllopis/mosquitto:1.4.7
+      jllopis/mosquitto:v1.4.7
 
 ## Data Only Containers
 
@@ -78,7 +78,7 @@ and then just use **VOLUMES_FROM** in your container:
       --name mqtt \
       -p 1883:1883 \
       -p 9883:9883 \
-      jllopis/mosquitto:1.4.7
+      jllopis/mosquitto:v1.4.7
 
 The image will save its auth data (if configured) to _redis_. You can start and link a _redis_ container or use an existing _redis_ instance (remember to configure the plugin).
 
@@ -107,13 +107,13 @@ By default, there is an `admin` superuser added to `auth-plugin.conf`. We will u
       -p 1883:1883 \
       -p 9883:9883 \
       --link redis:mosquitto.redis.link \
-      jllopis/mosquitto:1.4.7
+      jllopis/mosquitto:v1.4.7
 
 ## 3. Add a password for the admin user
 
 (or whatever user u have configured...)
 
-    $ docker run -ti --rm jllopis/mosquitto:1.4.7 np -p secretpass
+    $ docker run -ti --rm jllopis/mosquitto:v1.4.7 np -p secretpass
     PBKDF2$sha256$901$5nH8dWZV5NXTI63/$0n3XrdhMxe7PedKZUcPKMd0WHka4408V
 
     $ docker run -it --link redis_1:redis --rm redis sh -c 'exec redis-cli -h "$REDIS_PORT_6379_TCP_ADDR" -p "$REDIS_PORT_6379_TCP_PORT"'
@@ -144,7 +144,7 @@ And... nothing happens becouse our `anonymous` user have no permission on that c
 
 Cool!! Lets try again:
 
-    $ mosquitto_pub -h b2d -t test -m "sample pub" -u admin -P secretpass
+    $ mosquitto_pub -h localhost -t test -m "sample pub" -u admin -P secretpass
 
 see the logs:
 
@@ -166,7 +166,7 @@ see the logs:
 
 Much better... But, did you get any output in the `mosquitto_sub`? None. Try this and replay:
 
-    $ mosquitto_sub -h b2d -t test -u admin -P secretpass
+    $ mosquitto_sub -h localhost -t test -u admin -P secretpass
 
 And now everything *should* work! ;)
 
