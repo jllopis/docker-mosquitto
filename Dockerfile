@@ -1,4 +1,4 @@
-FROM alpine:3.3
+FROM alpine:3.4
 
 EXPOSE 1883
 EXPOSE 9883
@@ -23,7 +23,7 @@ RUN buildDeps='git alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linu
     cd mosquitto && \
     git checkout ${MOSQUITTO_VERSION} -b ${MOSQUITTO_VERSION} && \
     sed -i -e "s|(INSTALL) -s|(INSTALL)|g" -e 's|--strip-program=${CROSS_COMPILE}${STRIP}||' */Makefile */*/Makefile && \
-    sed -i "s@/usr/share/xml/docbook/stylesheet/docbook-xsl/manpages/docbook.xsl@/usr/share/xml/docbook/xsl-stylesheets-1.78.1/manpages/docbook.xsl@" man/manpage.xsl && \
+    sed -i "s@/usr/share/xml/docbook/stylesheet/docbook-xsl/manpages/docbook.xsl@/usr/share/xml/docbook/xsl-stylesheets-1.79.1/manpages/docbook.xsl@" man/manpage.xsl && \
     # wo WITH_MEMORY_TRACKING=no, mosquitto segfault after receiving first message
     make WITH_MEMORY_TRACKING=no WITH_SRV=yes WITH_WEBSOCKETS=yes && \
     make install && \

@@ -13,7 +13,7 @@ It has the auth plugin `https://github.com/jpmens/mosquitto-auth-plug` included.
 
 For details on the auth plugin configuration, refer to the author repository. A little quick&dirty example its included at the end.
 
-The docker images builds with Official Alpine Linux 3.3.
+The docker images builds with Official Alpine Linux 3.4.
 
 # Build
 
