@@ -21,7 +21,7 @@ Alternatively you can start it by means of [docker-compose](https://docs.docker.
 
 **NOTE**
 
-The Alpine Linux test image released with v1.4.9 is the main _Dockerfile_ now. The one based upon Debian has been dropped.
+The Alpine Linux test image released with v1.4.3 is the main _Dockerfile_ now. The one based upon Debian has been dropped.
 
 ## Build the Mosquitto docker image
 
