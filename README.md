@@ -5,7 +5,7 @@ Mosquitto MQTT Broker on Docker Image.
 
 # Version
 
-**mosquitto** v1.4.8
+**mosquitto** v1.4.9
 
 This version implement MQTT over WebSocket. You can use an MQTT JavaScript library to connect, like Paho: http://eclipse.org/paho/clients/js/
 
@@ -21,7 +21,7 @@ Alternatively you can start it by means of [docker-compose](https://docs.docker.
 
 **NOTE**
 
-The Alpine Linux test image released with v1.4.3 is the main _Dockerfile_ now. The one based upon Debian has been dropped.
+The Alpine Linux test image released with v1.4.9 is the main _Dockerfile_ now. The one based upon Debian has been dropped.
 
 ## Build the Mosquitto docker image
 
@@ -29,13 +29,13 @@ The Alpine Linux test image released with v1.4.3 is the main _Dockerfile_ now. T
 
 You can specify your repository and tag by
 
-    $ sudo make REPOSITORY=my_own_repo/mqtt TAG=v1.4.8
+    $ sudo make REPOSITORY=my_own_repo/mqtt TAG=v1.4.9
 
-Default for **REPOSITORY** is **jllopis/mosquitto** (should change this) and for **TAG** is **mosquitto version (1.4.8 now)**.
+Default for **REPOSITORY** is **jllopis/mosquitto** (should change this) and for **TAG** is **mosquitto version (1.4.9 now)**.
 
 Actually the command executed by make is
 
-    docker build --no-cache -t jllopis/mosquitto:v1.4.8 .
+    docker build --no-cache -t jllopis/mosquitto:v1.4.9 .
 
 # Persistence and Configuration
 
@@ -63,7 +63,7 @@ See the following examples for some guidance:
       --name mqtt \
       -p 1883:1883 \
       -p 9883:9883 \
-      jllopis/mosquitto:v1.4.8
+      jllopis/mosquitto:v1.4.9
 
 ## Data Only Containers
 
@@ -78,7 +78,7 @@ and then just use **VOLUMES_FROM** in your container:
       --name mqtt \
       -p 1883:1883 \
       -p 9883:9883 \
-      jllopis/mosquitto:v1.4.8
+      jllopis/mosquitto:v1.4.9
 
 The image will save its auth data (if configured) to _redis_. You can start and link a _redis_ container or use an existing _redis_ instance (remember to configure the plugin).
 
@@ -107,13 +107,13 @@ By default, there is an `admin` superuser added to `auth-plugin.conf`. We will u
       -p 1883:1883 \
       -p 9883:9883 \
       --link redis:mosquitto.redis.link \
-      jllopis/mosquitto:v1.4.8
+      jllopis/mosquitto:v1.4.9
 
 ## 3. Add a password for the admin user
 
 (or whatever user u have configured...)
 
-    $ docker run -ti --rm jllopis/mosquitto:v1.4.8 np -p secretpass
+    $ docker run -ti --rm jllopis/mosquitto:v1.4.9 np -p secretpass
     PBKDF2$sha256$901$5nH8dWZV5NXTI63/$0n3XrdhMxe7PedKZUcPKMd0WHka4408V
 
     $ docker run -it --link redis_1:redis --rm redis sh -c 'exec redis-cli -h "$REDIS_PORT_6379_TCP_ADDR" -p "$REDIS_PORT_6379_TCP_PORT"'
