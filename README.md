@@ -7,21 +7,19 @@ Mosquitto MQTT Broker on Docker Image.
 
 **mosquitto** v1.4.9
 
-This version implement MQTT over WebSocket. You can use an MQTT JavaScript library to connect, like Paho: http://eclipse.org/paho/clients/js/
+This version implement MQTT over WebSocket. You can use an MQTT JavaScript library to connect, like Paho: https://github.com/eclipse/paho.mqtt.javascript
 
 It has the auth plugin `https://github.com/jpmens/mosquitto-auth-plug` included. It uses (and is compiled with) support for a `Redis` and `http` backends. The additional config for this plugin (sample `auth-plugin.conf` included) can be bind mounted in the extended configuration directory: `/etc/mosquitto.d`. Any file with a `.conf` extension will be loaded by `mosquitto` on startup.
 
 For details on the auth plugin configuration, refer to the author repository. A little quick&dirty example its included at the end.
+
+The docker images builds with Official Alpine Linux 3.3.
 
 # Build
 
 Use the provide _Makefile_ to build the image.
 
 Alternatively you can start it by means of [docker-compose](https://docs.docker.com/compose): `docker-compose up`. This is useful when testing. It start up _redis_ and link it to _mosquitto_ so you can test the _auth-plugin_ easily.
-
-**NOTE**
-
-The Alpine Linux test image released with v1.4.3 is the main _Dockerfile_ now. The one based upon Debian has been dropped.
 
 ## Build the Mosquitto docker image
 
