@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:3.6
 
 EXPOSE 1883
 EXPOSE 9883
@@ -9,7 +9,7 @@ RUN addgroup -S mosquitto && \
     adduser -S -H -h /var/empty -s /sbin/nologin -D -G mosquitto mosquitto
 
 ENV PATH=/usr/local/bin:/usr/local/sbin:$PATH
-ENV MOSQUITTO_VERSION=v1.4.11
+ENV MOSQUITTO_VERSION=v1.4.12
 
 COPY run.sh /
 COPY libressl.patch /
