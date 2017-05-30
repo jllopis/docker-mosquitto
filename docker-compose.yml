@@ -26,7 +26,7 @@ services:
                 depends_on:
                 - redis
                 labels:
-                - "local.example.description=Mosquitto v1.4.11 MQTT server"
+                - "local.example.description=Mosquitto v1.4.12 MQTT server"
 #                links:
 #                - redis:mosquitto.redis.link
 
