@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:edge
 
 EXPOSE 1883
 EXPOSE 9883
@@ -9,7 +9,7 @@ RUN addgroup -S mosquitto && \
     adduser -S -H -h /var/empty -s /sbin/nologin -D -G mosquitto mosquitto
 
 ENV PATH=/usr/local/bin:/usr/local/sbin:$PATH
-ENV MOSQUITTO_VERSION=v1.4.12
+ENV MOSQUITTO_VERSION=v1.4.14
 
 COPY run.sh /
 COPY libressl.patch /
@@ -20,18 +20,14 @@ RUN buildDeps='git build-base libressl-dev libwebsockets-dev c-ares-dev util-lin
     touch /var/lib/mosquitto/.keep && \
     mkdir -p /etc/mosquitto.d && \
     apk update && \
-    #apk add $buildDeps hiredis libwebsockets libuuid c-ares openssl curl ca-certificates && \
     apk add $buildDeps hiredis libwebsockets libuuid c-ares libressl curl ca-certificates && \
     git clone https://github.com/eclipse/mosquitto.git && \
     cd mosquitto && \
     git checkout ${MOSQUITTO_VERSION} -b ${MOSQUITTO_VERSION} && \
     sed -i -e "s|(INSTALL) -s|(INSTALL)|g" -e 's|--strip-program=${CROSS_COMPILE}${STRIP}||' */Makefile */*/Makefile && \
     sed -i "s@/usr/share/xml/docbook/stylesheet/docbook-xsl/manpages/docbook.xsl@/usr/share/xml/docbook/xsl-stylesheets-1.79.1/manpages/docbook.xsl@" man/manpage.xsl && \
-    ## musl c lib do not support libanl
     sed -i 's/ -lanl//' config.mk && \
     patch -p1 < /libressl.patch && \
-    # wo WITH_MEMORY_TRACKING=no, mosquitto segfault after receiving first message
-    # libressl does not suppor PSK
     make WITH_MEMORY_TRACKING=no WITH_SRV=yes WITH_WEBSOCKETS=yes WITH_TLS_PSK=no && \
     make install && \
     git clone git://github.com/jpmens/mosquitto-auth-plug.git && \
