@@ -56,8 +56,8 @@ See the following examples for some guidance:
     $ sudo docker run -ti \
       -v /tmp/mosquitto/etc/mosquitto:/etc/mosquitto \
       -v /tmp/mosquitto/etc/mosquitto.d:/etc/mosquitto.d \
-      -v /tmp/mosquitto/var/lib/mosquitto:/var/lib/mosquitto
-      -v /tmp/mosquitto/auth-plug.conf:/etc/mosquitto.d/auth-plugin.conf
+      -v /tmp/mosquitto/var/lib/mosquitto:/var/lib/mosquitto \
+      -v /tmp/mosquitto/auth-plug.conf:/etc/mosquitto.d/auth-plugin.conf \
       --name mqtt \
       -p 1883:1883 \
       -p 9883:9883 \
@@ -91,7 +91,7 @@ By default, there is an `admin` superuser added to `auth-plugin.conf`. We will u
     $ sudo docker run -d \
       --name redis_1 \
       -p 6379 \
-      -v ${PWD}/tmp/redis-data:/data
+      -v ${PWD}/tmp/redis-data:/data \
       redis:3
 
 ## 2. Start mosquitto with the linked redis
@@ -99,8 +99,8 @@ By default, there is an `admin` superuser added to `auth-plugin.conf`. We will u
     $ sudo docker run -d \
       -v ${PWD}/mosquitto/etc/mosquitto:/etc/mosquitto \
       -v ${PWD}/mosquitto/etc/mosquitto.d:/etc/mosquitto.d \
-      -v ${PWD}/mosquitto/var/lib/mosquitto:/var/lib/mosquitto
-      -v ${PWD}/mosquitto/auth-plug.conf:/etc/mosquitto.d/auth-plugin.conf
+      -v ${PWD}/mosquitto/var/lib/mosquitto:/var/lib/mosquitto \
+      -v ${PWD}/mosquitto/auth-plug.conf:/etc/mosquitto.d/auth-plugin.conf \
       --name mqtt \
       -p 1883:1883 \
       -p 9883:9883 \
