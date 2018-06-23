@@ -9,18 +9,18 @@ RUN addgroup -S mosquitto && \
     adduser -S -H -h /var/empty -s /sbin/nologin -D -G mosquitto mosquitto
 
 ENV PATH=/usr/local/bin:/usr/local/sbin:$PATH
-ENV MOSQUITTO_VERSION=v1.4.14
+ENV MOSQUITTO_VERSION=v1.5
 
 COPY run.sh /
 COPY libressl.patch /
 #RUN buildDeps='git build-base alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linux-dev hiredis-dev curl-dev libxslt docbook-xsl'; \
-RUN buildDeps='git build-base libressl-dev libwebsockets-dev c-ares-dev util-linux-dev hiredis-dev curl-dev libxslt docbook-xsl'; \
+RUN buildDeps='git build-base libressl-dev libwebsockets-dev c-ares-dev util-linux-dev hiredis-dev postgresql-dev curl-dev libxslt docbook-xsl'; \
     chmod +x /run.sh && \
     mkdir -p /var/lib/mosquitto && \
     touch /var/lib/mosquitto/.keep && \
     mkdir -p /etc/mosquitto.d && \
     apk update && \
-    apk add $buildDeps hiredis libwebsockets libuuid c-ares libressl curl ca-certificates && \
+    apk add $buildDeps hiredis postgresql-libs libwebsockets libuuid c-ares libressl curl ca-certificates && \
     git clone https://github.com/eclipse/mosquitto.git && \
     cd mosquitto && \
     git checkout ${MOSQUITTO_VERSION} -b ${MOSQUITTO_VERSION} && \
@@ -36,6 +36,8 @@ RUN buildDeps='git build-base libressl-dev libwebsockets-dev c-ares-dev util-lin
     sed -i "s/BACKEND_REDIS ?= no/BACKEND_REDIS ?= yes/" config.mk && \
     sed -i "s/BACKEND_HTTP ?= no/BACKEND_HTTP ?= yes/" config.mk && \
     sed -i "s/BACKEND_MYSQL ?= yes/BACKEND_MYSQL ?= no/" config.mk && \
+    sed -i "s/BACKEND_POSTGRES ?= no/BACKEND_POSTGRES ?= yes/" config.mk && \
+    sed -i "s/BACKEND_JWT ?= no/BACKEND_JWT ?= yes/" config.mk && \
     sed -i "s/MOSQUITTO_SRC =/MOSQUITTO_SRC = ..\//" config.mk && \
     sed -i "s/EVP_MD_CTX_new/EVP_MD_CTX_create/g" cache.c && \
     sed -i "s/EVP_MD_CTX_free/EVP_MD_CTX_destroy/g" cache.c && \
