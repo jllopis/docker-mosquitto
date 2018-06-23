@@ -45,5 +45,5 @@ index c2a43b2..6b43c11 100644
 -#if OPENSSL_VERSION_NUMBER < 0x10100000L
 +#ifndef HAVE_OPENSSL_OPAQUE_STRUCTS
  	EVP_MD_CTX context;
-
-	digest = EVP_get_digestbyname("sha512");
+ 
+ 	digest = EVP_get_digestbyname("sha512");
