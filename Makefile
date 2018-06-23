@@ -1,6 +1,6 @@
 DOCKER=docker
 REPOSITORY?=jllopis/mosquitto
-TAG?=v1.4.14
+TAG?=v1.5
 
 all:
 	@echo "Mosquitto version: ${TAG}"
