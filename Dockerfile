@@ -25,9 +25,8 @@ RUN buildDeps='git cmake build-base libressl-dev c-ares-dev util-linux-dev hired
     cmake . && \
     make install && \
     cd .. && \
-    git clone https://github.com/eclipse/mosquitto.git && \
+    git clone -b ${MOSQUITTO_VERSION} https://github.com/eclipse/mosquitto.git && \
     cd mosquitto && \
-    git checkout ${MOSQUITTO_VERSION} -b ${MOSQUITTO_VERSION} && \
     sed -i -e "s|(INSTALL) -s|(INSTALL)|g" -e 's|--strip-program=${CROSS_COMPILE}${STRIP}||' */Makefile */*/Makefile && \
     sed -i "s@/usr/share/xml/docbook/stylesheet/docbook-xsl/manpages/docbook.xsl@/usr/share/xml/docbook/xsl-stylesheets-1.79.1/manpages/docbook.xsl@" man/manpage.xsl && \
     sed -i 's/ -lanl//' config.mk && \
