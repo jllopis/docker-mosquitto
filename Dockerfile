@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.8
 
 EXPOSE 1883
 EXPOSE 9883
