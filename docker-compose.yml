@@ -2,7 +2,7 @@ version: '2'
 
 services:
         redis:
-                image: redis:4.0-alpine
+                image: redis:5.0.3-alpine
                 volumes:
                 - ${PWD}/tmp/data:/data
                 ports:
@@ -26,9 +26,7 @@ services:
                 depends_on:
                 - redis
                 labels:
-                - "local.example.description=Mosquitto v1.5 MQTT server"
-#                links:
-#                - redis:mosquitto.redis.link
+                - "local.example.description=Mosquitto v1.5.5 MQTT server"
 
 networks:
         mosqnet:
