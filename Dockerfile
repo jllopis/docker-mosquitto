@@ -1,5 +1,9 @@
 FROM alpine:3.8
 
+LABEL maintainer="Joan Llopis <jllopisg@gmail.com>" \
+      description="Mosquitto MQTT Broker with auth-plug" \
+      version="v1.5.5"
+
 EXPOSE 1883
 EXPOSE 9883
 
@@ -13,25 +17,41 @@ ENV MOSQUITTO_VERSION=v1.5.5
 ENV LIBWEBSOCKETS_VERSION=v3.1-stable
 
 COPY run.sh /
-RUN buildDeps='git cmake build-base libressl-dev c-ares-dev util-linux-dev hiredis-dev postgresql-dev curl-dev libxslt docbook-xsl'; \
+
+RUN apk --no-cache add --virtual buildDeps git cmake build-base libressl-dev c-ares-dev util-linux-dev hiredis-dev postgresql-dev curl-dev; \
     chmod +x /run.sh && \
     mkdir -p /var/lib/mosquitto && \
     touch /var/lib/mosquitto/.keep && \
     mkdir -p /etc/mosquitto.d && \
-    apk update && \
-    apk add $buildDeps hiredis postgresql-libs libuuid c-ares libressl curl ca-certificates && \
+    apk add hiredis postgresql-libs libuuid c-ares libressl curl ca-certificates && \
     git clone -b ${LIBWEBSOCKETS_VERSION} https://libwebsockets.org/repo/libwebsockets && \
     cd libwebsockets && \
-    cmake . && \
+    cmake . \
+      -DCMAKE_BUILD_TYPE=MinSizeRel \
+      -DLWS_IPV6=ON \
+      -DLWS_WITHOUT_CLIENT=ON \
+      -DLWS_WITHOUT_TESTAPPS=ON \
+      -DLWS_WITHOUT_EXTENSIONS=ON \
+      -DLWS_WITHOUT_BUILTIN_GETIFADDRS=ON \
+      -DLWS_WITH_ZIP_FOPS=OFF \
+      -DLWS_WITH_ZLIB=OFF \
+      -DLWS_WITH_SHARED=OFF && \
+    make -j "$(nproc)" && \
+    rm -rf /root/.cmake && \
     make install && \
     cd .. && \
     git clone -b ${MOSQUITTO_VERSION} https://github.com/eclipse/mosquitto.git && \
     cd mosquitto && \
-    sed -i -e "s|(INSTALL) -s|(INSTALL)|g" -e 's|--strip-program=${CROSS_COMPILE}${STRIP}||' */Makefile */*/Makefile && \
-    sed -i "s@/usr/share/xml/docbook/stylesheet/docbook-xsl/manpages/docbook.xsl@/usr/share/xml/docbook/xsl-stylesheets-1.79.1/manpages/docbook.xsl@" man/manpage.xsl && \
-    sed -i 's/ -lanl//' config.mk && \
-    make WITH_MEMORY_TRACKING=no WITH_SRV=yes WITH_WEBSOCKETS=yes WITH_TLS_PSK=no && \
-    make install && \
+    make -j "$(nproc)" \
+      CFLAGS="-Wall -O2 -I/libwebsockets/include" \
+      LDFLAGS="-L/libwebsockets/lib" \
+      WITH_SRV=yes \
+      WITH_ADNS=no \
+      WITH_DOCS=no \
+      WITH_MEMORY_TRACKING=no \
+      WITH_TLS_PSK=no \
+      WITH_WEBSOCKETS=yes \
+    install && \
     git clone git://github.com/jpmens/mosquitto-auth-plug.git && \
     cd mosquitto-auth-plug && \
     cp config.mk.in config.mk && \
@@ -41,12 +61,12 @@ RUN buildDeps='git cmake build-base libressl-dev c-ares-dev util-linux-dev hired
     sed -i "s/BACKEND_POSTGRES ?= no/BACKEND_POSTGRES ?= yes/" config.mk && \
     sed -i "s/BACKEND_JWT ?= no/BACKEND_JWT ?= yes/" config.mk && \
     sed -i "s/MOSQUITTO_SRC =/MOSQUITTO_SRC = ..\//" config.mk && \
-    make && \
-    cp auth-plug.so /usr/local/lib/ && \
-    cp np /usr/local/bin/ && chmod +x /usr/local/bin/np && \
+    make -j "$(nproc)" && \
+    install -s -m755 auth-plug.so /usr/local/lib/ && \
+    install -s -m755 np /usr/local/bin/ && \
     cd / && rm -rf mosquitto && \
     rm -rf libwebsockets && \
-    apk del $buildDeps && rm -rf /var/cache/apk/*
+    apk del buildDeps && rm -rf /var/cache/apk/*
 
 ADD mosquitto.conf /etc/mosquitto/mosquitto.conf
 
