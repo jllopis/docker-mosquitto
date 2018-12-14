@@ -7,7 +7,7 @@ VERSION?=v1.5.5
 
 image: ## build the docker image from Dockerfile
 	$(DOCKER) build --no-cache -t ${REPOSITORY}:${VERSION} \
-        --build-arg VERSION=`git rev-parse --short HEAD` \
+        --build-arg VERSION=${VERSION} \
         --build-arg VCS_REF=`git rev-parse --short HEAD` \
         --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` .
 
