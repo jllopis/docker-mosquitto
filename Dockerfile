@@ -1,8 +1,19 @@
 FROM alpine:3.8
 
+# Build-time metadata as defined at http://label-schema.org
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
 LABEL maintainer="Joan Llopis <jllopisg@gmail.com>" \
-      description="Mosquitto MQTT Broker with auth-plug" \
-      version="v1.5.5"
+      org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="mosquitto MQTT Brocker with auth-plugin" \
+      org.label-schema.description="This project builds mosquitto with auth-plugin. \
+      It also has mosquitto_pub, mosquitto_sub and np." \
+      org.label-schema.url="https://cloud.docker.com/u/jllopis/repository/docker/jllopis/mosquitto" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/jllopis/docker-mosquitto" \
+      org.label-schema.version=$VERSION \
+      org.label-schema.schema-version="1.0"
 
 EXPOSE 1883
 EXPOSE 9883
