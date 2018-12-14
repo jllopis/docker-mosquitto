@@ -1,14 +1,12 @@
-DOCKER=docker
+.PHONY: help
+.DEFAULT_GOAL := help
+
+DOCKER=$(shell which docker)
 REPOSITORY?=jllopis/mosquitto
 TAG?=v1.5.5
 
-all:
-	@echo "Mosquitto version: ${TAG}"
-	@echo ""
-	@echo "Commands:"
-	@echo "  make image : build the mosquitto image"
+image: ## build the docker image from Dockerfile
+	$(DOCKER) build --no-cache -t ${REPOSITORY}:${TAG} .
 
-image:
-	@echo "Building mosquitto image"
-	${DOCKER} build --no-cache -t ${REPOSITORY}:${TAG} .
-
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
