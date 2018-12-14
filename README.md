@@ -1,6 +1,11 @@
 docker-mosquitto
 ================
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/jllopis/mosquitto.svg)](https://cloud.docker.com/u/jllopis/repository/docker/jllopis/mosquitto)
+[![Docker Stars](https://img.shields.io/docker/stars/jllopis/mosquitto.svg)](https://cloud.docker.com/u/jllopis/repository/docker/jllopis/mosquitto)
+[![Docker Build Status](https://img.shields.io/docker/build/jllopis/mosquitto.svg)](https://cloud.docker.com/u/jllopis/repository/docker/jllopis/mosquitto)
+[![](https://images.microbadger.com/badges/image/jllopis/mosquitto.svg)](https://microbadger.com/images/jllopis/mosquitto "Get your own image badge on microbadger.com")
+
 Mosquitto MQTT Broker on Docker Image.
 
 # Version
