@@ -24,7 +24,7 @@ RUN addgroup -S mosquitto && \
     adduser -S -H -h /var/empty -s /sbin/nologin -D -G mosquitto mosquitto
 
 ENV PATH=/usr/local/bin:/usr/local/sbin:$PATH
-ENV MOSQUITTO_VERSION=v1.6.2
+ENV MOSQUITTO_VERSION=v1.6.3
 ENV LIBWEBSOCKETS_VERSION=v2.4.2
 
 COPY run.sh /
@@ -63,7 +63,7 @@ RUN apk --no-cache add --virtual buildDeps git cmake build-base openssl-dev c-ar
       WITH_TLS_PSK=no \
       WITH_WEBSOCKETS=yes \
     install && \
-    git clone https://github.com/EMSTrack/mosquitto-auth-plug && \
+    git clone https://github.com/vankxr/mosquitto-auth-plug && \
     cd mosquitto-auth-plug && \
     cp config.mk.in config.mk && \
     sed -i "s/BACKEND_CDB ?= no/BACKEND_CDB ?= no/" config.mk && \
