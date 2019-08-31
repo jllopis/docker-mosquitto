@@ -24,7 +24,7 @@ RUN addgroup -S mosquitto && \
     adduser -S -H -h /var/empty -s /sbin/nologin -D -G mosquitto mosquitto
 
 ENV PATH=/usr/local/bin:/usr/local/sbin:$PATH
-ENV MOSQUITTO_VERSION=v1.6.3
+ENV MOSQUITTO_VERSION=v1.6.4
 ENV LIBWEBSOCKETS_VERSION=v2.4.2
 
 COPY run.sh /

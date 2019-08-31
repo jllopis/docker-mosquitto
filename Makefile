@@ -3,7 +3,7 @@
 
 DOCKER=$(shell which docker)
 REPOSITORY?=jllopis/mosquitto
-VERSION?=v1.6.3
+VERSION?=v1.6.4
 
 image: ## build the docker image from Dockerfile
 	$(DOCKER) build --no-cache -t ${REPOSITORY}:${VERSION} \
