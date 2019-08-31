@@ -1,4 +1,4 @@
-FROM alpine:3.9.3
+FROM alpine:3.10.2
 
 # Build-time metadata as defined at http://label-schema.org
 ARG BUILD_DATE
