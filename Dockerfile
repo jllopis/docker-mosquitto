@@ -15,11 +15,6 @@ LABEL maintainer="Joan Llopis <jllopisg@gmail.com>" \
       org.label-schema.version=$VERSION \
       org.label-schema.schema-version="1.0"
 
-EXPOSE 1883
-EXPOSE 9883
-
-VOLUME ["/var/lib/mosquitto", "/etc/mosquitto", "/etc/mosquitto.d"]
-
 RUN addgroup -S mosquitto && \
     adduser -S -H -h /var/empty -s /sbin/nologin -D -G mosquitto mosquitto
 
@@ -50,7 +45,6 @@ RUN apk --no-cache add --virtual buildDeps git cmake build-base openssl-dev c-ar
       -DLWS_WITH_SHARED=OFF && \
     make -j "$(nproc)" && \
     rm -rf /root/.cmake && \
-    make install && \
     cd .. && \
     git clone -b ${MOSQUITTO_VERSION} https://github.com/eclipse/mosquitto.git && \
     cd mosquitto && \
@@ -58,12 +52,20 @@ RUN apk --no-cache add --virtual buildDeps git cmake build-base openssl-dev c-ar
       CFLAGS="-Wall -O2 -I/libwebsockets/include" \
       LDFLAGS="-L/libwebsockets/lib" \
       WITH_SRV=yes \
+      WITH_STRIP=yes \
       WITH_ADNS=no \
       WITH_DOCS=no \
       WITH_MEMORY_TRACKING=no \
       WITH_TLS_PSK=no \
       WITH_WEBSOCKETS=yes \
-    install && \
+    binary && \
+    install -s -m755 client/mosquitto_pub /usr/bin/mosquitto_pub && \
+    install -s -m755 client/mosquitto_rr /usr/bin/mosquitto_rr && \
+    install -s -m755 client/mosquitto_sub /usr/bin/mosquitto_sub && \
+    install -s -m644 lib/libmosquitto.so.1 /usr/lib/libmosquitto.so.1 && \
+    ln -sf /usr/lib/libmosquitto.so.1 /usr/lib/libmosquitto.so && \
+    install -s -m755 src/mosquitto /usr/sbin/mosquitto && \
+    install -s -m755 src/mosquitto_passwd /usr/bin/mosquitto_passwd && \
     git clone https://github.com/vankxr/mosquitto-auth-plug && \
     cd mosquitto-auth-plug && \
     cp config.mk.in config.mk && \
@@ -80,13 +82,20 @@ RUN apk --no-cache add --virtual buildDeps git cmake build-base openssl-dev c-ar
     sed -i "s/BACKEND_MEMCACHED ?= no/BACKEND_MEMCACHED ?= no/" config.mk && \
     sed -i "s/MOSQUITTO_SRC =/MOSQUITTO_SRC = ..\//" config.mk && \
     make -j "$(nproc)" && \
-    install -s -m755 auth-plug.so /usr/local/lib/ && \
-    install -s -m755 np /usr/local/bin/ && \
+    install -s -m755 auth-plug.so /usr/lib/ && \
+    install -s -m755 np /usr/bin/ && \
     cd / && rm -rf mosquitto && \
     rm -rf libwebsockets && \
     apk del buildDeps && rm -rf /var/cache/apk/*
 
 ADD mosquitto.conf /etc/mosquitto/mosquitto.conf
+
+# MQTT default port and default port over TLS
+EXPOSE 1883 8883
+# MQTT over websocket default port and default port over TLS
+EXPOSE 9001 9002
+
+VOLUME ["/var/lib/mosquitto", "/etc/mosquitto", "/etc/mosquitto.d"]
 
 ENTRYPOINT ["/run.sh"]
 CMD ["mosquitto"]
