@@ -19,7 +19,7 @@ RUN addgroup -S mosquitto && \
     adduser -S -H -h /var/empty -s /sbin/nologin -D -G mosquitto mosquitto
 
 ENV PATH=/usr/local/bin:/usr/local/sbin:$PATH
-ENV MOSQUITTO_VERSION=v.1.6.8
+ENV MOSQUITTO_VERSION=1.6.8
 #ENV LIBWEBSOCKETS_VERSION=v3.2.1
 ENV LIBWEBSOCKETS_VERSION=v2.4.2
 
@@ -46,7 +46,9 @@ RUN apk --no-cache add --virtual buildDeps git cmake build-base openssl-dev c-ar
     make -j "$(nproc)" && \
     rm -rf /root/.cmake && \
     cd .. && \
-    git clone -b ${MOSQUITTO_VERSION} https://github.com/eclipse/mosquitto.git && \
+    wget http://mosquitto.org/files/source/mosquitto-${MOSQUITTO_VERSION}.tar.gz && \
+    tar xzfv mosquitto-${MOSQUITTO_VERSION}.tar.gz && \
+    mv mosquitto-${MOSQUITTO_VERSION} mosquitto && \
     cd mosquitto && \
     make -j "$(nproc)" \
       CFLAGS="-Wall -O2 -I/libwebsockets/include" \
