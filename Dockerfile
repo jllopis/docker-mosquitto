@@ -48,6 +48,7 @@ RUN apk --no-cache add --virtual buildDeps git cmake build-base openssl-dev c-ar
     wget http://mosquitto.org/files/source/mosquitto-${MOSQUITTO_VERSION}.tar.gz && \
     tar xzfv mosquitto-${MOSQUITTO_VERSION}.tar.gz && \
     mv mosquitto-${MOSQUITTO_VERSION} mosquitto && \
+    rm mosquitto-${MOSQUITTO_VERSION}.tar.gz && \
     cd mosquitto && \
     make -j "$(nproc)" \
       CFLAGS="-Wall -O2 -I/libwebsockets/include" \
