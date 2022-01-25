@@ -116,13 +116,23 @@ By default, there is an `admin` superuser added to `auth-plugin.conf`. We will u
 
 (or whatever user u have configured...)
 
+Example username: `admin` ***(Note: the username does not influence the password hash)***
+
+Example password: `secretpass`
+
+
     $ docker run -ti --rm jllopis/mosquitto:v1.6.9 np -p secretpass
     PBKDF2$sha256$901$5nH8dWZV5NXTI63/$0n3XrdhMxe7PedKZUcPKMd0WHka4408V
+
+Example username: `admin`
+
+Example password hash: `PBKDF2$sha256$901$5nH8dWZV5NXTI63/$0n3XrdhMxe7PedKZUcPKMd0WHka4408V` ***(Note: the hash is generated using the previous command)***
 
     $ docker run -it --link redis_1:redis --rm redis sh -c 'exec redis-cli -h "$REDIS_PORT_6379_TCP_ADDR" -p "$REDIS_PORT_6379_TCP_PORT"'
     172.17.0.64:6379> SET admin PBKDF2$sha256$901$5nH8dWZV5NXTI63/$0n3XrdhMxe7PedKZUcPKMd0WHka4408V
     OK
     172.17.0.64:6379> QUIT
+
 
 ## 4. Subscribe to a test channel
 
